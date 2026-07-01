@@ -1,0 +1,77 @@
+### GitHub Description
+
+**Bluetooth LED Control using HM-10 (BLE)**
+
+This project demonstrates two-way Bluetooth communication between an Arduino and a smartphone using the HM-10 Bluetooth module. Commands sent from the DSD TECH app are received by the Arduino to control LEDs connected to pins 13 and 7.
+
+The Arduino can:
+
+* Turn LEDs ON (`LEDON`)
+* Turn LEDs OFF (`LEDOFF`)
+* Blink LEDs 5 times (`BLINK`)
+
+The HM-10 communicates with the Arduino using UART serial communication, while Bluetooth Low Energy (BLE) is used to communicate with the mobile application.
+
+**Concepts Demonstrated:**
+
+* Bluetooth Low Energy (BLE)
+* UART Serial Communication
+* ASCII Command Processing
+* Sending and Receiving Data
+* LED Control
+* SoftwareSerial Library
+
+***
+
+### Short Video Explanation
+
+This project uses an HM-10 Bluetooth module to establish wireless communication between a smartphone and an Arduino.
+
+The `SoftwareSerial` library creates a serial connection on pins 10 and 11, allowing the Arduino to communicate with the HM-10 module.
+
+```cpp
+SoftwareSerial HM10(10, 11);
+```
+
+In the `setup()` function, pins 13 and 7 are configured as outputs for the LEDs, and both the Serial Monitor and HM-10 communication are started at 9600 baud.
+
+```cpp
+pinMode(13, OUTPUT);
+pinMode(7, OUTPUT);
+```
+
+Inside the `loop()`, the Arduino checks if data is available from the HM-10.
+
+```cpp
+if(HM10.available())
+```
+
+The received message is stored in the variable `cmd` and processed as an ASCII command.
+
+If the user sends:
+
+```text
+LEDON
+```
+
+both LEDs turn ON.
+
+If the user sends:
+
+```text
+LEDOFF
+```
+
+both LEDs turn OFF.
+
+If the user sends:
+
+```text
+BLINK
+```
+
+the LEDs blink on and off five times using a `for` loop.
+
+After executing each command, the Arduino sends a confirmation message back through the HM-10 module, demonstrating two-way communication.
+
+This project demonstrates Bluetooth communication, command processing, and remote control of electronic devices using an Arduino and an HM-10 BLE module.

@@ -1,0 +1,49 @@
+**External Interrupt LED Switcher**
+
+This Arduino project demonstrates the use of **external interrupts** and **PWM fading**. Two LEDs are connected to pins 5 and 6, while a push button is connected to pin 3.
+
+When the button is pressed, an interrupt is triggered, causing the active LED to switch. The selected LED then continuously fades in and out using PWM.
+
+**Key Concepts:**
+
+* External Interrupts
+* Interrupt Service Routine (ISR)
+* PWM (Pulse Width Modulation)
+* INPUT\_PULLUP
+* Volatile Variables
+
+***
+
+### Short Video Explanation
+
+This project uses an external interrupt to control which LED is active.
+
+* `LED1` is connected to pin 5 and `LED2` to pin 6.
+* `currentLED` stores the LED currently being controlled.
+* The `volatile` keyword is used because the variable is modified inside an interrupt function.
+
+In `setup()`, pin 3 is configured as an `INPUT_PULLUP`, meaning it remains HIGH until the button is pressed.
+
+```cpp
+attachInterrupt(1, changeLED, FALLING);
+```
+
+This attaches an interrupt to pin 3. When the button is pressed, the signal changes from HIGH to LOW, triggering the `changeLED()` function.
+
+The interrupt function switches the active LED:
+
+```cpp
+void changeLED()
+{
+  if(currentLED == LED1)
+    currentLED = LED2;
+  else
+    currentLED = LED1;
+}
+```
+
+In the `loop()`, the selected LED gradually fades in and out using PWM with `analogWrite()`.
+
+When the button is pressed, the interrupt immediately changes the active LED, demonstrating how interrupts allow the Arduino to respond instantly to external events.
+
+**Outcome:** Pressing the button switches the fading effect between the two LEDs without stopping the program.
